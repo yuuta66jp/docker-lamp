@@ -45,6 +45,7 @@ if ($staff_name == '' || $staff_pass == '' || $staff_pass != $staff_pass2) {
   print '<br />';
   print '<input type="button" onclick="history.back()" value="戻る">';
   print '<input type="submit" value="OK">';
+  print '</form>';
 }
 
 ?>
