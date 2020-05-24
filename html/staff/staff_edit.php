@@ -9,8 +9,8 @@
 <?php
 
 try {
-  // スタッフcodeを受け取る
-  $staff_code = $_POST['staffcode'];
+  // スタッフcodeをGETで受け取る(URLパラメータで受け取る)
+  $staff_code = $_GET['staffcode'];
 
   $dsn = 'mysql:dbname=shop;host=mysql;charset=utf8';
   $user = 'root';
