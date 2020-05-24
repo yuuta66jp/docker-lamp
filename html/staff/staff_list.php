@@ -30,7 +30,7 @@ try {
     // $stmtから１レコードを取り出す
     $rec = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($rec == false) {
-    break;
+      break;
     }
     // スタッフのcodeをvalueに渡す
     print '<input type="radio" name="staffcode" value="'.$rec['code'].'">';
