@@ -17,7 +17,7 @@ try {
   $password = 'pass';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-  // codeカラム,nameカラムのデータを全て取得
+  // nameカラムのデータを全て取得
   $sql = 'SELECT name FROM mst_staff WHERE code=?';
   $stmt = $dbh->prepare($sql);
   $data[] = $staff_code;
