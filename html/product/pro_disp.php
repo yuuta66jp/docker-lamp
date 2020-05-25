@@ -9,23 +9,24 @@
 <?php
 
 try {
-  // スタッフcodeをGETで受け取る(URLパラメータで受け取る)
-  $staff_code = $_GET['staffcode'];
+  // 商品codeをGETで受け取る(URLパラメータで受け取る)
+  $pro_code = $_GET['procode'];
 
   $dsn = 'mysql:dbname=shop;host=mysql;charset=utf8';
   $user = 'root';
   $password = 'pass';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-  // nameカラムのデータを全て取得
-  $sql = 'SELECT name FROM mst_staff WHERE code=?';
+  // nameカラム,priceカラムのデータを全て取得
+  $sql = 'SELECT name,price FROM mst_product WHERE code=?';
   $stmt = $dbh->prepare($sql);
-  $data[] = $staff_code;
+  $data[] = $pro_code;
   $stmt->execute($data);
 
   $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-  // 取り出したスタッフ名を変数にコピー
-  $staff_name = $rec['name'];
+  // 取り出した商品名,価格を変数にコピー
+  $pro_name = $rec['name'];
+  $pro_price = $rec['price'];
 
   $dbh = null;
 
@@ -36,13 +37,16 @@ try {
 
 ?>
 
-スタッフ情報参照<br />
+商品情報参照<br />
 <br />
-スタッフコード<br />
-<?php print $staff_code; ?>
+商品コード<br />
+<?php print $pro_code; ?>
 <br />
-スタッフ名<br />
-<?php print $staff_name; ?>
+商品名<br />
+<?php print $pro_name; ?>
+<br />
+価格<br />
+<?php print $pro_price; ?>円
 <br />
 <br />
 <form>
