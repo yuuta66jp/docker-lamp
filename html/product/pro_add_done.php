@@ -12,6 +12,7 @@ try {
 
   $pro_name = $_POST['name'];
   $pro_price = $_POST['price'];
+  $pro_gazou_name = $_POST['gazou_name'];
 
   $pro_name = htmlspecialchars($pro_name, ENT_QUOTES, 'UTF-8');
   $pro_price = htmlspecialchars($pro_price, ENT_QUOTES, 'UTF-8');
@@ -24,12 +25,13 @@ try {
   // ドライバオプション(SQL実行時のエラー発生時の処理,PDO::ERRMODE_EXCEPTIONで例外をスロー)
   $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
   // SQL文を変数に代入
-  $sql = 'INSERT INTO mst_product(name, price) VALUES (?, ?)';
+  $sql = 'INSERT INTO mst_product(name, price,gazou) VALUES (?, ?,?)';
   // prepareメソッドでSQL文を準備する
   $stmt = $dbh->prepare($sql);
   // VALUES値を設定
   $data[] = $pro_name;
   $data[] = $pro_price;
+  $data[] = $pro_gazou_name;
   // executeメソッドでクエリを実行する
   $stmt->execute($data);
   // データベースから切断する
