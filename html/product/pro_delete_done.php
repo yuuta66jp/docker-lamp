@@ -11,6 +11,7 @@
 try {
 
   $pro_code = $_POST['code'];
+  $pro_gazou_name = $_POST['gazou_name'];
 
   // dsn情報
   $dsn = 'mysql:dbname=shop;host=mysql;charset=utf8';
@@ -30,6 +31,11 @@ try {
   $stmt->execute($data);
   // データベースから切断する
   $dbh = null;
+
+  // 画像ファイルを削除する
+  if ($pro_gazou_name != '') {
+    unlink('./gazou/'.$pro_gazou_name);
+  }
 
   // エラー表示
 } catch (Exception $e) {
