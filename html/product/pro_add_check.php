@@ -23,15 +23,16 @@ if (isset ($_SESSION['login']) == false) {
 <body>
 
 <?php
+
+require_once('../common/common.php');
+
 // $_POST[inputのname属性]でhtmlフォームから値を受け取る
-$pro_name = $_POST['name'];
-$pro_price = $_POST['price'];
+$post = sanitize($_POST);
+$pro_name = $post['name'];
+$pro_price = $post['price'];
 // $_FILES['gazou'];で画像データを取得
 $pro_gazou = $_FILES['gazou'];
 
-// エスケープ処理(XSS対策)
-$pro_name = htmlspecialchars($pro_name, ENT_QUOTES, 'UTF-8');
-$pro_price = htmlspecialchars($pro_price, ENT_QUOTES, 'UTF-8');
 
 if ($pro_name == '') {
   print '商品名が入力されていません。<br />';
