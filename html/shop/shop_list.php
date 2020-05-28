@@ -3,13 +3,15 @@ session_start ();
 // session_regenerate_id (true)でセッションIDをアクセス毎に変更する
 session_regenerate_id (true);
 // trueもしくはfalseを判定
-if (isset ($_SESSION['login']) == false) {
-  print 'ログインされていません。<br />';
-  print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
-  exit();
+if (isset ($_SESSION['member_login']) == false) {
+  print 'ようこそゲスト様　';
+  print '<a href=" member_login.html">会員ログイン</a><br />';
+  print '<br />';
 } else {
-  print $_SESSION['staff_name'];
-  print 'さんログイン中<br />';
+  print 'ようこそ';
+  print $_SESSION['member_name'];
+  print '様　';
+  print '<a href=" member_logout.html">r=ログアウト</a><br />';
   print '<br />';
 }
 ?>
@@ -32,15 +34,14 @@ try {
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
   // codeカラム,nameカラムのデータを全て取得
-  $sql = 'SELECT code,name FROM mst_staff WHERE 1';
+  $sql = 'SELECT code,name,price FROM mst_product WHERE 1';
   $stmt = $dbh->prepare($sql);
   $stmt->execute();
 
   $dbh = null;
 
-  print 'スタッフ一覧<br /><br />';
+  print '商品一覧<br /><br />';
 
-  print '<form method="post" action="staff_branch.php">';
   // 繰り返し処理
   while(true) {
     // $stmtから１レコードを取り出す
@@ -48,16 +49,13 @@ try {
     if ($rec == false) {
       break;
     }
-    // スタッフのcodeをvalueに渡す
-    print '<input type="radio" name="staffcode" value="'.$rec['code'].'">';
-    print $rec['name'];
+    // 商品リンク作成
+    print '<a href="shop_product.php?procode='.$rec['code'].'">';
+    print $rec['name'].'---';
+    print $rec['price'].'円';
+    print '</a>';
     print '<br />';
   }
-  print '<input type="submit" name="disp" value="参照">';
-  print '<input type="submit" name="add" value="追加">';
-  print '<input type="submit" name="edit" value="修正">';
-  print '<input type="submit" name="delete" value="削除">';
-  print '</form>';
 
 } catch (Exception $e) {
   echo "接続失敗: " . $e->getMessage() . "\n";
@@ -65,9 +63,6 @@ try {
 }
 
 ?>
-
-<br />
-<a href="../staff_login/staff_top.php">トップメニューへ</a><br />
 
 </body>
 </html>
