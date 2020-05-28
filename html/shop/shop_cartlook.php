@@ -27,38 +27,34 @@ if (isset ($_SESSION['member_login']) == false) {
 <?php
 
 try {
+  $cart = $_SESSION['cart'];
+  // count()で配列内のデータ数(商品数)を数える
+  $max = count($cart);
 
   $dsn = 'mysql:dbname=shop;host=mysql;charset=utf8';
   $user = 'root';
   $password = 'pass';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-  // codeカラム,nameカラムのデータを全て取得
-  $sql = 'SELECT code,name,price FROM mst_product WHERE 1';
-  $stmt = $dbh->prepare($sql);
-  $stmt->execute();
 
-  $dbh = null;
+  foreach ($cart as $key => $val) {
+    $sql = 'SELECT code, name, price, gazou FROM mst_product WHERE code=?';
+    $stmt = $dbh->prepare($sql);
+    $data[0] = $val;
+    $stmt->execute($data);
 
-  print '商品一覧<br /><br />';
-
-  // 繰り返し処理
-  while(true) {
-    // $stmtから１レコードを取り出す
     $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($rec == false) {
-      break;
+
+    $pro_name[] = $rec['name'];
+    $pro_price[] = $rec['price'];
+    if ($rec['gazou'] == '') {
+      $pro_gazou[] = '';
+    } else {
+      $pro_gazou[] = '<img src="../product/gazou/'.$rec['gazou'].'">';
     }
-    // 商品リンク作成
-    print '<a href="shop_product.php?procode='.$rec['code'].'">';
-    print $rec['name'].'---';
-    print $rec['price'].'円';
-    print '</a>';
-    print '<br />';
   }
 
-  print '<br />';
-  print '<a href="shop_cartlook.php">カートを見る</a><br />';
+  $dbh = null;
 
 } catch (Exception $e) {
   echo "接続失敗: " . $e->getMessage() . "\n";
@@ -66,6 +62,22 @@ try {
 }
 
 ?>
+
+カートの中身<br />
+<br />
+<?php for($i = 0; $i < $max; $i++) {
+  ?>
+    <?php print $pro_name[$i]; ?>
+    <?php print $pro_gazou[$i]; ?>
+    <?php print $pro_price[$i] ?>円
+    <br />
+  <?php
+  }
+  ?>
+
+<form>
+<input type="button" onclick="history.back()" value="戻る">
+</form>
 
 </body>
 </html>
