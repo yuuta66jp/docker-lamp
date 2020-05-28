@@ -28,6 +28,7 @@ if (isset ($_SESSION['member_login']) == false) {
 
 try {
   $cart = $_SESSION['cart'];
+  $kazu = $_SESSION['kazu'];
   // count()で配列内のデータ数(商品数)を数える
   $max = count($cart);
 
@@ -65,18 +66,21 @@ try {
 
 カートの中身<br />
 <br />
-<?php for($i = 0; $i < $max; $i++) {
-  ?>
-    <?php print $pro_name[$i]; ?>
-    <?php print $pro_gazou[$i]; ?>
-    <?php print $pro_price[$i] ?>円
-    <br />
-  <?php
-  }
-  ?>
-
-<form>
-<input type="button" onclick="history.back()" value="戻る">
+<form method="post" action="kazu_change.php">
+  <?php for($i = 0; $i < $max; $i++) {
+    ?>
+      <?php print $pro_name[$i]; ?>
+      <?php print $pro_gazou[$i]; ?>
+      <?php print $pro_price[$i] ?>円
+      <input type="text" name="kazu<?php print $i; ?>" value="<?php print $kazu[$i]; ?>">
+      <?php print $pro_price[$i] * $kazu[$i]; ?>円
+      <br />
+    <?php
+    }
+    ?>
+  <input type="hidden" name="max" value="<?php print $max; ?>">
+  <input type="submit" value="数量変更"><br />
+  <input type="button" onclick="history.back()" value="戻る">
 </form>
 
 </body>

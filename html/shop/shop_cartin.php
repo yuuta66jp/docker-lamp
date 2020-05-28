@@ -33,12 +33,15 @@ try {
   if (isset($_SESSION['cart']) == true) {
     // 現在のカート内容をcartに代入
     $cart = $_SESSION['cart'];
+    $kazu = $_SESSION['kazu'];
   }
 
-  // cart配列に商品codeを代入
+  // cart配列に商品code,数量を代入
   $cart[] = $pro_code;
+  $kazu[] = 1;
   // セッションに保存
   $_SESSION['cart'] = $cart;
+  $_SESSION['kazu'] = $kazu;
 
 } catch (Exception $e) {
   echo "接続失敗: " . $e->getMessage() . "\n";
