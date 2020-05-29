@@ -34,6 +34,12 @@ try {
     // 現在のカート内容をcartに代入
     $cart = $_SESSION['cart'];
     $kazu = $_SESSION['kazu'];
+    // in_array(第一引数(存在するか知りたいデータ),第二引数(データの入っている配列))
+    if (in_array($pro_code, $cart) == true) {
+      print 'その商品はすでにカートに入っています。<br />';
+      print '<a href="shop_list.php">商品一覧に戻る</a>';
+      exit();
+    }
   }
 
   // cart配列に商品code,数量を代入
