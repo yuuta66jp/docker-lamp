@@ -74,11 +74,11 @@ if (preg_match('/\A\d{2,5}-?\d{2,5}-?\d{4,5}\z/', $tel) == 0) {
 }
 
 if ($okflg == true) {
-  print '<form method="post" action="shop_done.php">';
+  print '<form method="post" action="shop_form_done.php">';
   print '<input type="hidden" name="onamae" value="'.$onamae.'">';
   print '<input type="hidden" name="email" value="'.$email.'">';
-  print '<input type="hidden" name="postl1" value="'.$postl1.'">';
-  print '<input type="hidden" name="postl2" value="'.$postl2.'">';
+  print '<input type="hidden" name="postal1" value="'.$postal1.'">';
+  print '<input type="hidden" name="postal2" value="'.$postal2.'">';
   print '<input type="hidden" name="address" value="'.$address.'">';
   print '<input type="hidden" name="tel" value="'.$tel.'">';
   print '<input type="button" onclick="history.back()" value="戻る">';
