@@ -35,7 +35,7 @@ try {
   $password = 'pass';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-  // codeカラム,nameカラムのデータを全て取得
+
   $sql = '
   SELECT
     dat_sales.code,
